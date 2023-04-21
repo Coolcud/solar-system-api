@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify,
 
 class Planet:
     def __init__(self, id, planet_name, num_of_moons, description):
@@ -31,3 +31,21 @@ def get_all_planets():
             "description": planet.description
         })
     return jsonify(response), 200
+
+@planets_bp.route("/<planet_id>", methods=["GET"])
+def get_one_planet(planet_id):
+    try:
+        planet_id = int(planet_id)
+    except ValueError:
+        return {"message:": f"ID '{planet_id}' is invalid."}, 400
+
+    for planet in planets_list:
+        if planet.id == planet_id:
+            return {
+                "id": planet.id,
+                "planet_name": planet.planet_name,
+                "number_of_moons": planet.num_of_moons,
+                "description": planet.description
+            }, 200
+
+    return {"message": f"Planet '{planet_id}' does not exist."}, 404
