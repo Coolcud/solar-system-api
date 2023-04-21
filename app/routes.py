@@ -1,23 +1,24 @@
 from flask import Blueprint, jsonify
 
-class Planet: 
-    def __init__(self, id, planet_name, number_of_moons, distance_from_sun):
+class Planet:
+    def __init__(self, id, planet_name, num_of_moons, description):
         self.id = id
         self.planet_name = planet_name
-        self.number_of_moons = number_of_moons
-        self.distance_from_sun = distance_from_sun
+        self.num_of_moons = num_of_moons
+        self.description = description
+
 planets_list = [
-    Planet(1, "Mercury", 0, "36.43 million mi"),
-    Planet(2, "Venus", 0, "66.79 million mi"),
-    Planet(3, "Earth", 1, "93.39 million mi"),
-    Planet(4, "Mars", 2, "155.04 million mi"),
-    Planet(5, "Jupiter", 90, "460.43 million mi"),
-    Planet(6, "Saturn", 83, "910.54 million mi"),
-    Planet(7, "Uranus", 27, "1.83 billion mi"),
-    Planet(8, "Neptune", 14, "2.78 billion mi")
+    Planet(1, "Mercury", 0, "A grey, rocky planet"),
+    Planet(2, "Venus", 0, "A yellow-white, marble planet"),
+    Planet(3, "Earth", 1, "A blue marble with different colored swirls"),
+    Planet(4, "Mars", 2, "A reddish, dusty, cold desert"),
+    Planet(5, "Jupiter", 90, "Covered in swirling cloud stripes"),
+    Planet(6, "Saturn", 83, "Unique planet with rings of ice"),
+    Planet(7, "Uranus", 27, "A baby blue ice giant"),
+    Planet(8, "Neptune", 14, "A dark blue planet with supersonic winds")
 ]
 
-planets_bp = Blueprint("planet", __name__, url_prefix="/planets") 
+planets_bp = Blueprint("planet", __name__, url_prefix="/planets")
 
 @planets_bp.route("", methods=["GET"])
 def get_all_planets():
@@ -26,7 +27,7 @@ def get_all_planets():
         response.append({
             "id": planet.id,
             "planet_name": planet.planet_name,
-            "number_of_moons": planet.number_of_moons,
-            "distance_from_sun": planet.distance_from_sun 
+            "number_of_moons": planet.num_of_moons,
+            "description": planet.description
         })
     return jsonify(response), 200
