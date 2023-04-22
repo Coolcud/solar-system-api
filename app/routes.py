@@ -7,7 +7,6 @@ class Planet:
         self.description = description
         self.num_of_moons = num_of_moons
 
-
 planets_list = [
     Planet(1, "Mercury", "A grey, rocky planet", 0),
     Planet(2, "Venus", "A yellow-white, marble planet", 0),
@@ -31,7 +30,6 @@ def get_all_planets():
             "description": planet.description,
             "number_of_moons": planet.num_of_moons
         })
-
     return jsonify(response), 200
 
 @planets_bp.route("/<planet_id>", methods=["GET"])
@@ -49,5 +47,4 @@ def get_one_planet(planet_id):
                 "description": planet.description,
                 "number_of_moons": planet.num_of_moons
             }, 200
-
     return jsonify({"message": f"Planet '{planet_id}' does not exist."}), 404
