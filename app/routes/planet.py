@@ -1,6 +1,6 @@
 from app import db
 from app.models.planet import Planet
-from flask import Blueprint, jsonify, make_response, request
+from flask import Blueprint, jsonify, make_response, request, abort
 
 planets_bp = Blueprint("planet", __name__, url_prefix="/planets")
 
@@ -29,13 +29,14 @@ def get_all_planets():
 
 @planets_bp.route("/<planet_id>", methods=["GET"])
 def get_one_planet(planet_id):
+    planet = validate_planet(planet_id)
+    return planet.to_dict(), 200 
+
+def validate_planet(planet_id): 
     try:
         planet_id = int(planet_id)
-    except ValueError:
-        return jsonify({"message:": f"Planet ID '{planet_id}' is invalid."}), 400
-
-    all_planets = Planet.query.all()
-    for planet in all_planets:
-        if planet.id == planet_id:
-            return planet.to_dict(), 200
+    except:
+        return abort(make_response({"message:": f"Planet ID '{planet_id}' is invalid."}, 400))
+    
+    return Planet.query.get_or_404(planet_id, f"Planet ID '{planet_id}' not found.")
 
