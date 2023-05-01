@@ -1,0 +1,9 @@
+planet_name,description,num_moons
+Mercury,"A grey, rocky planet",0
+Venus,"A yellow-white, marble planet",0
+Earth,"A blue marble with different colored swirls",1
+Mars,"A reddish, dusty, cold desert",2
+Jupiter,"Covered in swirling cloud stripes",90
+Saturn,"Unique planet with rings of ice",83
+Uranus,"A baby blue ice giant",27
+Neptune,"A dark blue planet with supersonic winds",14
