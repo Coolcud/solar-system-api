@@ -27,20 +27,16 @@ def get_all_planets():
 
     return jsonify(response), 200
 
-# @planets_bp.route("/<planet_id>", methods=["GET"])
-# def get_one_planet(planet_id):
-#     try:
-#         planet_id = int(planet_id)
-#     except ValueError:
-#         return jsonify({"message:": f"ID '{planet_id}' is invalid."}), 400
+@planets_bp.route("/<planet_id>", methods=["GET"])
+def get_one_planet(planet_id):
+    try:
+        planet_id = int(planet_id)
+    except ValueError:
+        return jsonify({"message:": f"Planet ID '{planet_id}' is invalid."}), 400
 
-#     for planet in planets_list:
-#         if planet.id == planet_id:
-#             return {
-#                 "id": planet.id,
-#                 "planet_name": planet.planet_name,
-#                 "description": planet.description,
-#                 "number_of_moons": planet.num_of_moons
-#             }, 200
-#     return jsonify({"message": f"Planet '{planet_id}' does not exist."}), 404
+    all_planets = Planet.query.all()
+    for planet in all_planets:
+        if planet.id == planet_id:
+            return planet.to_dict(), 200
 
+    return jsonify({"message": f"Planet '{planet_id}' does not exist."}), 404
