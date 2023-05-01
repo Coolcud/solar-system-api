@@ -29,11 +29,6 @@ def get_all_planets():
 
 # @planets_bp.route("/<planet_id>", methods=["GET"])
 # def get_one_planet(planet_id):
-#     try:
-#         planet_id = int(planet_id)
-#     except ValueError:
-#         return jsonify({"message:": f"ID '{planet_id}' is invalid."}), 400
-
 #     for planet in planets_list:
 #         if planet.id == planet_id:
 #             return {
@@ -44,3 +39,10 @@ def get_all_planets():
 #             }, 200
 #     return jsonify({"message": f"Planet '{planet_id}' does not exist."}), 404
 
+# def validate_planet(planet_id): 
+#     try:
+#         planet_id = int(planet_id)
+#     except ValueError:
+#         return jsonify({"message:": f"ID '{planet_id}' is invalid."}), 400
+    
+#     return jsonify({"message": f"Planet '{planet_id}' does not exist."}), 404
