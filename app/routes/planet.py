@@ -51,4 +51,13 @@ def update_planet(planet_id):
 
     db.session.commit()
 
-    return make_response(f"Planet ID '{planet_id}' is updated.", 200)
+    return make_response(f"Planet ID '{planet_id}' has been updated.", 200)
+
+@planets_bp.route("/<planet_id>", methods=["DELETE"])
+def delete_planet(planet_id): 
+    planet = validate_planet(planet_id)
+
+    db.session.delete(planet)
+    db.session.commit()
+
+    return make_response(f"Planet ID '{planet_id}' has been deleted.", 200)
