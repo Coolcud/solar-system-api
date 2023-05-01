@@ -40,3 +40,15 @@ def validate_planet(planet_id):
     
     return Planet.query.get_or_404(planet_id, f"Planet ID '{planet_id}' not found.")
 
+@planets_bp.route("/<planet_id>", methods=["PUT"])
+def update_planet(planet_id):
+    planet = validate_planet(planet_id)
+
+    request_body = request.get_json()
+    planet.name = request_body["planet_name"]
+    planet.description = request_body["description"]
+    planet.num_moons = request_body["num_moons"]
+
+    db.session.commit()
+
+    return make_response(f"Planet ID '{planet_id}' is updated.", 200)
