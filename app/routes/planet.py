@@ -20,8 +20,16 @@ def create_planet():
 
 @planets_bp.route("", methods=["GET"])
 def get_all_planets():
+    planet_query = request.args.get("planet_name")
+
+    all_planets = Planet.query.all() if not planet_query else Planet.query.filter_by(planet_name=planet_query)
+
+    # if planet_query is None:
+    #     all_planets = Planet.query.all()
+    # else:
+    #     all_planets = Planet.query.filter_by(planet_name=planet_query)
+
     response = []
-    all_planets = Planet.query.all()
     for planet in all_planets:
         response.append(planet.to_dict())
 
@@ -30,14 +38,14 @@ def get_all_planets():
 @planets_bp.route("/<planet_id>", methods=["GET"])
 def get_one_planet(planet_id):
     planet = validate_planet(planet_id)
-    return planet.to_dict(), 200 
+    return planet.to_dict(), 200
 
-def validate_planet(planet_id): 
+def validate_planet(planet_id):
     try:
         planet_id = int(planet_id)
     except:
         return abort(make_response({"message:": f"Planet ID '{planet_id}' is invalid."}, 400))
-    
+
     return Planet.query.get_or_404(planet_id, f"Planet ID '{planet_id}' not found.")
 
 @planets_bp.route("/<planet_id>", methods=["PUT"])
@@ -54,7 +62,7 @@ def update_planet(planet_id):
     return make_response(f"Planet ID '{planet_id}' has been updated.", 200)
 
 @planets_bp.route("/<planet_id>", methods=["DELETE"])
-def delete_planet(planet_id): 
+def delete_planet(planet_id):
     planet = validate_planet(planet_id)
 
     db.session.delete(planet)
