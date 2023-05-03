@@ -16,7 +16,7 @@ def create_planet():
     db.session.add(new_planet)
     db.session.commit()
 
-    return make_response(f"Planet '{new_planet.planet_name}' successfully created!"), 201
+    return make_response(jsonify(f"Planet '{new_planet.planet_name}' successfully created!"), 201)
 
 @planets_bp.route("", methods=["GET"])
 def get_all_planets():
@@ -59,7 +59,7 @@ def update_planet(planet_id):
 
     db.session.commit()
 
-    return make_response(f"Planet ID '{planet_id}' has been updated.", 200)
+    return make_response(jsonify(f"Planet ID '{planet_id}' has been updated."), 200)
 
 @planets_bp.route("/<planet_id>", methods=["DELETE"])
 def delete_planet(planet_id):
@@ -68,4 +68,4 @@ def delete_planet(planet_id):
     db.session.delete(planet)
     db.session.commit()
 
-    return make_response(f"Planet ID '{planet_id}' has been deleted.", 200)
+    return make_response(jsonify(f"Planet ID '{planet_id}' has been deleted."), 200)
