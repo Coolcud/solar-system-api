@@ -1,5 +1,5 @@
 import pytest 
-from app import create_app, db 
+from app import create_app, db
 from app.models.planet import Planet 
 from flask.signals import request_finished
 
